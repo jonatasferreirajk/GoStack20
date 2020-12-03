@@ -1,10 +1,14 @@
+/* eslint-disable camelcase */
 import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import AppointmentsRepository from '../repositories/AppoitmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
 const appointmentsRouter = Router();
+
+appointmentsRouter.use(ensureAuthenticated);
 
 appointmentsRouter.get('/', async (req, res) => {
   const appointmentsRepository = getCustomRepository(AppointmentsRepository);
